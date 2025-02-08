@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: time-http-server
+  labels:
+    app: time-http-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: time-http-server
+  template:
+    metadata:
+      labels:
+        app: time-http-server
+    spec:
+      containers:
+        - name: busybox
+          image: busybox
+          command: ["sh", "-c"]
+          args:
+            - |
+              echo "Creating folder /www" &&
+              mkdir -p /www &&
+              echo "Folder /www created, create index.html" &&
+              echo "<html><body><h1>${MESSAGE}</h1><p>$(date)</p></body></html>" > /www/index.html &&
+              echo "Starting httpd on port 8080" &&
+              httpd -f -p 8080 -h /www &  # Run httpd in background
+              while true; do
+                echo "Running $(date)"
+                echo "<html><body><h1>${MESSAGE}</h1><p>$(date)</p></body></html>" > /www/index.html
+                sleep 1
+              done
+
+
+          env:
+            - name: MESSAGE
+              value: "{{ .Values.message }}"

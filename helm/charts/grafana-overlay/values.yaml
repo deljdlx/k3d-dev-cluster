@@ -1,0 +1,8 @@
+ingress:
+  enabled: true
+  subdomain: grafana
+
+grafana:
+  # Administrator credentials when not using an existing secret (see below)
+  adminUser: admin
+  adminPassword: admin

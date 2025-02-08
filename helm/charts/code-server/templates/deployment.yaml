@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: code-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: code-server
+  template:
+    metadata:
+      labels:
+        app: code-server
+    spec:
+      containers:
+        - name: code-server
+          image: code-server:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 7780
+
+          volumeMounts:
+            - mountPath: "/home/code-server"
+              name: code-server
+            - mountPath: "/var/www/html"
+              name: code-server-sources
+      volumes:
+        - name: code-server
+          hostPath:
+            path: /mnt/volumes/home
+            type: DirectoryOrCreate
+        - name: code-server-sources
+          hostPath:
+            path: /mnt/volumes/src
+            type: DirectoryOrCreate

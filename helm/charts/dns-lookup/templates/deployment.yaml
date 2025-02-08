@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dns-lookup
+  labels:
+    app: dns-lookup
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dns-lookup
+  template:
+    metadata:
+      labels:
+        app: dns-lookup
+    spec:
+      containers:
+        - name: busybox
+          image: busybox
+          command: ["sh", "-c"]
+          args:
+            - "while true; do nslookup {{ .Values.lookupTarget }}; sleep {{ .Values.interval }}; done"

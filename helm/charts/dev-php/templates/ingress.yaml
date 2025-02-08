@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: dev-php
+  namespace: default
+  annotations:
+    {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
+    {{ $key }}: "{{ $value }}"
+    {{- end }}
+
+    "helm.sh/hook-weight": "-1"  # Rend l’Ingress moins prioritaire
+    "helm.sh/hook": "post-install, post-upgrade"  # Ne s'applique qu'après l'installation du Deployment
+spec:
+  tls:
+  - hosts:
+      - {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
+  # default behavior is to use the secret ; but we store cert in a volume
+  # secretName: letsencrypt-cert
+  rules:
+  - host: {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: dev-php
+            port:
+              number: 80

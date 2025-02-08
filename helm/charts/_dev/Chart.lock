@@ -1,0 +1,27 @@
+dependencies:
+- name: http-time
+  repository: file://../http-time
+  version: 0.1.0
+- name: informations
+  repository: file://../informations
+  version: 0.1.0
+- name: adminer
+  repository: file://../adminer
+  version: 0.2.1
+- name: dev-js
+  repository: file://../dev-js
+  version: 0.1.0
+- name: dev-php
+  repository: file://../dev-php
+  version: 0.1.0
+- name: portainer
+  repository: file://../portainer
+  version: 1.0.59
+- name: kubernetes-dashboard
+  repository: file://../kubernetes-dashboard
+  version: 0.1.0
+- name: code-server
+  repository: file://../code-server
+  version: 0.1.0
+digest: sha256:6dcf5e1d9394ae743a1e848074aab8619fc4900501dd07a4df7f5d813ce5f2b6
+generated: "2025-02-08T12:19:05.372726616+01:00"

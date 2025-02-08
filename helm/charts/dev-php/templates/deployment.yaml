@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-pod-green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-php
+      version: green
+  template:
+    metadata:
+      labels:
+        app: dev-php
+        version: green
+    spec:
+      containers:
+        - name: php-pod
+          image: dev-php:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: php-config
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              value: root
+
+
+          volumeMounts:
+            - mountPath: "/var/www/html"
+              name: php-sources
+      volumes:
+        - name: php-sources
+          hostPath:
+            path: /mnt/volumes/src/php-green
+            type: DirectoryOrCreate
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: php-pod-blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dev-php
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: dev-php
+        version: blue
+    spec:
+      containers:
+        - name: php-pod
+          image: dev-php:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 80
+          envFrom:
+            - configMapRef:
+                name: php-config
+          env:
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MYSQL_USER
+              value: root
+
+
+          volumeMounts:
+            - mountPath: "/var/www/html"
+              name: php-sources
+      volumes:
+        - name: php-sources
+          hostPath:
+            path: /mnt/volumes/src/php-blue
+            type: DirectoryOrCreate
+

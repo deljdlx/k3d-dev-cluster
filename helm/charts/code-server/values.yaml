@@ -1,0 +1,4 @@
+ingress:
+  enabled: true
+  subdomain: code-server
+

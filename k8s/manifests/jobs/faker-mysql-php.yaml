@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: populate-mariadb
+spec:
+  template:
+    spec:
+      containers:
+        - name: faker-mysql
+          image: faker-mysql-php:latest
+          imagePullPolicy: Never
+          env:
+            - name: DB_HOST
+              value: "mariadb"
+            - name: DB_USER
+              value: "root"
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: DB_NAME
+              value: "testdb"
+            - name: NUM_USERS
+              value: "500"
+            - name: NUM_PRODUCTS
+              value: "100"
+            - name: NUM_ORDERS
+              value: "2000"
+            - name: NUM_LOGS
+              value: "5000"
+      restartPolicy: Never

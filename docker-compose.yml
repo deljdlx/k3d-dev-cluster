@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  php:
+    build:
+      context: ./docker/php
+      dockerfile: Dockerfile
+    container_name: mon-projet-php
+    volumes:
+      - ./src/php:/var/www/html
+    ports:
+      - "8080:80"
+    networks:
+      - k3d-network
+    restart: unless-stopped
+networks:
+  k3d-network:
+    driver: bridge

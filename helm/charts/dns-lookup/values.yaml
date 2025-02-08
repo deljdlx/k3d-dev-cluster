@@ -1,0 +1,2 @@
+lookupTarget: "kubernetes.default.svc.cluster.local"  # Domaine à tester
+interval: 10  # Temps entre chaque nslookup (en secondes)

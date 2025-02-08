@@ -1,0 +1,4 @@
+ingress:
+  enabled: true
+  subdomain: adminer
+  # host: adminer.k8s.home3.jlb.ninja

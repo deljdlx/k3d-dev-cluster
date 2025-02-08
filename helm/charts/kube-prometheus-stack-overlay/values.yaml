@@ -1,0 +1,6 @@
+ingress:
+  subdomain: prometheus
+
+kube-prometheus-stack:
+  grafana:
+    enabled: false

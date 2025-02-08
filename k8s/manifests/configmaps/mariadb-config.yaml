@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-config
+  namespace: default
+data:
+  MYSQL_DATABASE: "testdb"
+  MYSQL_USER: "user"
+  MYSQL_PASSWORD: "secret-user-pass"
+  MYSQL_ROOT_PASSWORD: "secret-root-pass"
+  MYSQL_HOST: "mariadb-service"

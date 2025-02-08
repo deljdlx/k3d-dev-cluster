@@ -1,0 +1,4 @@
+message: "Time server with busybox"
+ingress:
+  enabled: true
+  subdomain: time

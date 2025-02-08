@@ -1,0 +1,35 @@
+# grafana:
+#   adminUser: "admin"
+#   adminPassword: "supersecurepassword"
+
+#   ingress:
+#     enabled: true
+#     annotations:
+#       traefik.ingress.kubernetes.io/router.entrypoints: websecure
+#       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+#     hosts:
+#       - grafana.mydomain.com
+#     tls:
+#       - hosts:
+#           - grafana.mydomain.com
+#         secretName: grafana-tls
+
+#   datasources:
+#     datasources.yaml:
+#       apiVersion: 1
+#       datasources:
+#         - name: Prometheus
+#           type: prometheus
+#           url: http://prometheus-operated.monitoring.svc.cluster.local:9090
+#           access: proxy
+#           isDefault: true
+#         - name: Loki
+#           type: loki
+#           url: http://loki-gateway.monitoring.svc.cluster.local
+#           access: proxy
+#         - name: MySQL
+#           type: mysql
+#           url: mariadb.default.svc.cluster.local
+#           user: root
+#           secureJsonData:
+#             password: "secret-root-pass"

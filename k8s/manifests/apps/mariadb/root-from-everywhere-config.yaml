@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mariadb-init-sql
+data:
+  init.sql: |
+    ALTER USER 'root'@'%' IDENTIFIED BY 'rootpassword';
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+    FLUSH PRIVILEGES;

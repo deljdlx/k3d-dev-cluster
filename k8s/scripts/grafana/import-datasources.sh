@@ -1,0 +1,1 @@
+curl -s http://monitoring-grafana.monitoring.svc.cluster.local/api/datasources -u admin:admin

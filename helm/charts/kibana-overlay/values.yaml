@@ -1,0 +1,11 @@
+ingress:
+  subdomain: "kibana"
+
+kibana:
+  ingress:
+    enabled: false
+  elasticsearch:
+    hosts:
+      - monitoring-elasticsearch
+    port: "9200"
+

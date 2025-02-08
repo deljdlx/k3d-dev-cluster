@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: php-config
+  namespace: default
+data:
+  FOOBAR: "HELLO WORLD"

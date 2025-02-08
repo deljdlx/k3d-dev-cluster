@@ -1,0 +1,14 @@
+prometheus-mysql-exporter:
+  serviceMonitor:
+    enabled: true
+  collectors: {
+    global_status: true,
+    global_variables: true,
+    info_schema.tables: true,
+
+  }
+  mysql:
+    db: ""
+    host: "mariadb.default.svc.cluster.local"
+    pass: "secret-root-pass"
+    user: "root"

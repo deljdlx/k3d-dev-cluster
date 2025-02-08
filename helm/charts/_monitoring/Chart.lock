@@ -1,0 +1,18 @@
+dependencies:
+- name: grafana-overlay
+  repository: file://../grafana-overlay
+  version: 0.1.0
+- name: kube-prometheus-stack-overlay
+  repository: file://../kube-prometheus-stack-overlay
+  version: 0.1.0
+- name: prometheus-mysql-exporter-overlay
+  repository: file://../prometheus-mysql-exporter-overlay
+  version: 0.1.0
+- name: elasticsearch-overlay
+  repository: file://../elasticsearch-overlay
+  version: 0.1.0
+- name: kibana-overlay
+  repository: file://../kibana-overlay
+  version: 0.1.0
+digest: sha256:968da1eb1fce85fe806a38012683983ab086c52b80c40100ad1b70472a1db9c5
+generated: "2025-02-08T12:30:46.628199099+01:00"

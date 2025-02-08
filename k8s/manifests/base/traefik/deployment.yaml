@@ -1,0 +1,70 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: traefik-router
+  labels:
+    app: traefik
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: traefik
+  template:
+    metadata:
+      labels:
+        app: traefik
+    spec:
+      serviceAccountName: traefik-account
+      containers:
+        - name: traefik
+          image: traefik:v3.3
+          env:
+            - name: ACME_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: traefik-config
+                  key: ACME_EMAIL
+          args:
+            - --api.insecure
+            - --providers.kubernetesingress
+            - --entrypoints.web.address=:80
+
+            - --log.level=INFO
+            - --log.format=json
+            - --accesslog.format=json
+            - --accesslog=true
+
+
+            - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+            - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
+            - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
+            - --entrypoints.websecure.address=:443
+
+            - --entrypoints.web.http.redirections.entryPoint.to=websecure
+            - --entrypoints.web.http.redirections.entryPoint.scheme=https
+            - --entrypoints.websecure.http.tls.certresolver=le
+
+            - --providers.kubernetescrd
+
+
+            - --entrypoints.node-dev.address=:3000
+
+            # work but not safe ; kep for reference
+            # - --serversTransport.insecureSkipVerify=true
+
+          ports:
+            - name: web
+              containerPort: 80
+            - name: dashboard
+              containerPort: 8080
+            - name: node-dev
+              containerPort: 3000
+          volumeMounts:
+            - mountPath: "/letsencrypt"
+              name: traefik-certificates
+      volumes:
+        - name: traefik-certificates
+          hostPath:
+            path: /mnt/volumes/traefik-certificates
+            type: DirectoryOrCreate

@@ -1,0 +1,28 @@
+apiVersion: v2
+name: _monitoring
+description: A Helm chart for Kubernetes
+type: application
+version: 0.1.0
+appVersion: "1.16.0"
+
+dependencies:
+
+  - name: grafana-overlay
+    version: "*"
+    repository: "file://../grafana-overlay"
+
+  - name: kube-prometheus-stack-overlay
+    version: "*"
+    repository: "file://../kube-prometheus-stack-overlay"
+
+  - name: prometheus-mysql-exporter-overlay
+    version: "*"
+    repository: "file://../prometheus-mysql-exporter-overlay"
+
+  - name: elasticsearch-overlay
+    version: "*"
+    repository: "file://../elasticsearch-overlay"
+
+  - name: kibana-overlay
+    version: "*"
+    repository: "file://../kibana-overlay"

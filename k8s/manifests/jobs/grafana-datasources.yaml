@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-datasource-import
+spec:
+  template:
+    spec:
+      containers:
+      - name: grafana-importer
+        image: curlimages/curl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Waiting for Grafana to be ready..."
+            until curl -s -o /dev/null -w "%{http_code}" http://monitoring-grafana.monitoring.svc.cluster.local/api/health | grep -q "200"; do
+              echo "Grafana not ready yet..."
+              sleep 5
+            done
+
+            echo "Importing Prometheus datasource..."
+            curl -X POST http://monitoring-grafana.monitoring.svc.cluster.local/api/datasources \
+                 -H "Content-Type: application/json" \
+                 -u admin:admin \
+                 -d '{
+                       "name": "Prometheus",
+                       "type": "prometheus",
+                       "url": "http://prometheus-operated.monitoring.svc.cluster.local:9090",
+                       "access": "proxy",
+                       "isDefault": true
+                     }'
+
+            echo "Importing Loki datasource..."
+            curl -X POST http://monitoring-grafana.monitoring.svc.cluster.local/api/datasources \
+                 -H "Content-Type: application/json" \
+                 -u admin:admin \
+                 -d '{
+                       "name": "Loki",
+                       "type": "loki",
+                       "url": "http://loki-gateway.monitoring.svc.cluster.local",
+                       "access": "proxy"
+                     }'
+
+            echo "Importing MySQL datasource..."
+            curl -X POST http://monitoring-grafana.monitoring.svc.cluster.local/api/datasources \
+                 -H "Content-Type: application/json" \
+                 -u admin:admin \
+                 -d '{
+                       "name": "MariaDB",
+                       "type": "mysql",
+                       "url": "mariadb.default.svc.cluster.local",
+                       "user": "root",
+                       "database": "",
+                       "access": "proxy",
+                       "secureJsonData": {
+                         "password": "secret-root-pass"
+                       }
+                     }'
+      restartPolicy: Never

@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: grafana-dashboard-import
+spec:
+  template:
+    spec:
+      containers:
+      - name: grafana-dashboard-importer
+        image: curlimages/curl:latest
+        command:
+          - /bin/sh
+          - -c
+          - |
+            echo "Waiting for Grafana to be ready..."
+            until curl -s -o /dev/null -w "%{http_code}" http://monitoring-grafana.monitoring.svc.cluster.local/api/health | grep -q "200"; do
+              echo "Grafana not ready yet..."
+              sleep 5
+            done
+
+            DASHBOARD_IDS=("15661" "159" "17501" "15141" "14057")
+
+            for ID in "${DASHBOARD_IDS[@]}"; do
+              echo "Downloading dashboard ID: $ID..."
+              DASHBOARD_JSON=$(curl -s "https://grafana.com/api/dashboards/$ID/revisions/latest/download")
+
+              if [ -z "$DASHBOARD_JSON" ]; then
+                echo "Error: Unable to download dashboard $ID"
+                continue
+              fi
+
+              echo "Importing dashboard ID: $ID..."
+              curl -X POST http://monitoring-grafana.monitoring.svc.cluster.local/api/dashboards/db \
+                   -H "Content-Type: application/json" \
+                   -u admin:admin \
+                   -d '{
+                         "dashboard": '"$DASHBOARD_JSON"',
+                         "overwrite": true,
+                         "folderId": 0,
+                         "message": "Imported by script"
+                       }'
+            done
+      restartPolicy: Never

@@ -1,0 +1,7 @@
+{
+    "require": {
+        "fakerphp/faker": "^1.19",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*"
+    }
+}

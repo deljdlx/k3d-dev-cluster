@@ -1,0 +1,7 @@
+volumes
+.vscode
+
+private-helm
+helm/private-charts
+
+k8s/manifests/configmaps/traefik-config.yaml

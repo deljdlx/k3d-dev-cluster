@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dev-js
+  labels:
+    app: dev-js
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: dev-js
+  template:
+    metadata:
+      labels:
+        app: dev-js
+    spec:
+      containers:
+        - name: dev-js
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          volumeMounts:
+            - name: workspace-volume
+              mountPath: {{ .Values.volume.mountPath }}
+
+      volumes:
+        - name: workspace-volume
+          hostPath:
+            path: {{ .Values.volume.hostPath }}
+            type: DirectoryOrCreate

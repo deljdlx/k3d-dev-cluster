@@ -1,0 +1,31 @@
+message: "Développement JavaScript"
+ingress:
+  enabled: true
+  # host: dev-js.k8s.home3.jlb.ninja
+  subdomain: dev-js
+
+replicaCount: 1
+image:
+  repository: dev-js
+  tag: latest
+  pullPolicy: Never
+
+container:
+  user: 1000
+
+volume:
+  enabled: true
+  hostPath: /mnt/volumes/src/dev-js  # Chemin sur l’hôte à monter dans le conteneur
+  mountPath: /workspace  # Chemin dans le conteneur
+
+resources:
+  limits:
+    cpu: "1"
+    memory: "1Gi"
+  requests:
+    cpu: "500m"
+    memory: "512Mi"
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

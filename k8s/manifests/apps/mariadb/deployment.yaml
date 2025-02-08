@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mariadb
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+        - name: mariadb
+          image: bitnami/mariadb:latest  # ✅ Utilisation de l'image Bitnami
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_ROOT_PASSWORD
+            - name: MARIADB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_USER
+            - name: MARIADB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mariadb-secret
+                  key: MYSQL_PASSWORD
+            - name: MARIADB_DATABASE
+              value: "mydatabase"  # ✅ Création automatique d'une base de données
+            - name: MARIADB_EXTRA_FLAGS
+              value: "--bind-address=0.0.0.0"  # ✅ Force MariaDB à écouter sur 0.0.0.0
+          volumeMounts:
+            - name: mariadb-storage
+              mountPath: /bitnami/mariadb  # ✅ Adaptation au chemin de Bitnami
+      volumes:
+        - name: mariadb-storage
+          persistentVolumeClaim:
+            claimName: mariadb-pvc
