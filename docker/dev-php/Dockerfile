@@ -41,6 +41,9 @@ RUN apt-get update \
 
 
 RUN a2enmod rewrite
+RUN cat /etc/apache2/sites-enabled/000-default.conf
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|g' /etc/apache2/sites-enabled/000-default.conf
+RUN cat /etc/apache2/sites-enabled/000-default.conf
 RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html
 

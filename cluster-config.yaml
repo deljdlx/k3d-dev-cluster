@@ -13,7 +13,10 @@ ports:
     nodeFilters:
       - loadbalancer
 volumes:
-  - volume: /home/jdlxt/dev-cluster/volumes:/mnt/volumes
+  - volume: /home/jdlxt/__dev/dev-cluster/volumes:/mnt/volumes
+    nodeFilters:
+      - all
+  - volume: /home/jdlxt/__dev/dev-cluster/volumes-private:/mnt/volumes-private
     nodeFilters:
       - all
 options:

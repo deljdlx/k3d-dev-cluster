@@ -27,7 +27,7 @@ spec:
       volumes:
         - name: code-server
           hostPath:
-            path: /mnt/volumes/home
+            path: /mnt/volumes-private/home
             type: DirectoryOrCreate
         - name: code-server-sources
           hostPath:

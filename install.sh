@@ -30,7 +30,7 @@ code-server:docker/code-server/Dockerfile
 dev-js:docker/dev-js/Dockerfile
 dev-php:docker/dev-php/Dockerfile
 faker-mysql-php:docker/faker-mysql-php/Dockerfile
-pecule-api:docker/pecule-api/Dockerfile
+pecule-api:docker-private/pecule-api/Dockerfile
 "
 
 for entry in $IMAGES; do

@@ -15,8 +15,8 @@ container:
 
 volume:
   enabled: true
-  hostPath: /mnt/volumes/src/dev-js  # Chemin sur l’hôte à monter dans le conteneur
-  mountPath: /workspace  # Chemin dans le conteneur
+  hostPath: /mnt/volumes/src/dev-js
+  mountPath: /workspace
 
 resources:
   limits:
@@ -29,3 +29,4 @@ resources:
 nodeSelector: {}
 tolerations: []
 affinity: {}
+
