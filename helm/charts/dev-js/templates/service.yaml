@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-js
+  name: {{ .Release.Namespace }}-dev-js
 spec:
   selector:
     app: dev-js

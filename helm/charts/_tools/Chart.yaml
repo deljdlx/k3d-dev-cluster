@@ -23,7 +23,6 @@ version: 0.1.0
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
 
-
 dependencies:
 
   - name: http-time
@@ -38,12 +37,6 @@ dependencies:
     version: "*"
     repository: "file://../code-server"
 
-
   - name: portainer
     version: "*"
     repository: "file://../portainer"
-
-  # - name: kubernetes-dashboard
-  #   version: "*"
-  #   repository: "file://../kubernetes-dashboard"
-

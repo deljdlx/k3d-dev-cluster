@@ -1,8 +1,7 @@
-{{- if .Values.ingress.enabled }}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dev-js
+  name: dev-php
   namespace: {{ .Release.Namespace }}
   annotations:
     {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
@@ -12,6 +11,8 @@ spec:
   tls:
   - hosts:
       - {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
+  # default behavior is to use the secret ; but we store cert in a volume
+  # secretName: letsencrypt-cert
   rules:
   - host: {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
     http:
@@ -20,8 +21,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Namespace }}-dev-js
+            name: {{ .Release.Namespace }}-dev-php
             port:
-              number: 3000
-{{- end }}
-
+              number: 80

@@ -73,24 +73,18 @@ kubectl apply -f k8s/manifests/configmaps/traefik-config.yaml \
 && kubectl apply -f k8s/manifests/apps/traefik-dashboard/ingress.yaml
 
 
-IMAGES=("faker-mysql-php" "dev-php:latest" "dev-js:latest" "code-server:latest" "pecule-api:latest")
+IMAGES=(
+    "faker-mysql-php"
+    "dev-php:latest"
+    "dev-js:latest"
+    "code-server:latest"
+    "pecule-api:latest"
+)
 CLUSTER="dev-cluster"
 
 for IMAGE in "${IMAGES[@]}"; do
-    if ! k3d image list --cluster "$CLUSTER" | grep -q "$IMAGE"; then
-        echo "🔧 Importing image $IMAGE"
-
-        # Lancer l'import en arrière-plan
-        (k3d image import "$IMAGE" --cluster "$CLUSTER") &
-
-        # Récupérer le PID du processus en arrière-plan
-        pid=$!
-
-        # Lancer le spinner
-        spinner "$pid" "Importing $IMAGE into K3d"
-    else
-        echo "👌 Image $IMAGE is already imported"
-    fi
+    echo "🔧 Importing $IMAGE..."
+    k3d image import "$IMAGE" --cluster "$CLUSTER"
 done
 
 

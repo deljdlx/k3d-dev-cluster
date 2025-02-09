@@ -1,8 +1,8 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: php-service-ingress
-  namespace: default
+  name: informations
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
     {{ $key }}: "{{ $value }}"
@@ -24,6 +24,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: informations
+            name: {{ .Release.Namespace }}-informations
             port:
               number: 80
