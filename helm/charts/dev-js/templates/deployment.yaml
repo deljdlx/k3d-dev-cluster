@@ -18,11 +18,14 @@ spec:
         - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: NEXTAUTH_URL
+              value: https://{{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
 
-          {{ if .Values.enableWelcomePage }}
+          {{ if .Values.runDev }}
           command: ["bash", "-c"]
           args:
-            - "cd /workspace && node server.js"
+            - "cd /workspace/app && npm run dev"
           {{ end }}
 
           volumeMounts:

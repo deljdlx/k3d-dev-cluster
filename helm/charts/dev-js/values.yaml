@@ -1,6 +1,5 @@
 name: dev-js
-enableWelcomePage: true
-message: "Développement JavaScript"
+runDev: false
 
 ingress:
   enabled: true

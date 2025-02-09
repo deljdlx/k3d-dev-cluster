@@ -1,0 +1,8 @@
+global:
+  domain: "k8s.somewhere.com"
+  ingress:
+    enabled: true
+    annotationsLetsEncrypt:
+      traefik.ingress.kubernetes.io/router.tls: "true"
+      traefik.ingress.kubernetes.io/router.tls.certresolver: "le"
+      traefik.ingress.kubernetes.io/router.entrypoints: "websecure"

@@ -1,12 +1,14 @@
 .vscode
 
 docker-private
-
 volumes/traefik-certificates/acme.json
 volumes/mariadb
 volumes-private
 
-private-helm
+cluster-config.yaml
+helm/values-global.yaml
 helm/private-charts
+
+
 
 k8s/manifests/configmaps/traefik-config.yaml

@@ -56,6 +56,7 @@ helm repo add traefik https://traefik.github.io/charts
 helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add portainer https://portainer.github.io/k8s
+
 helm repo update
 
 
@@ -177,8 +178,16 @@ cat volumes/src/informations/code-server-config.txt
 
 
 # todo move this to a separate script
-kubectl apply -f k8s/manifests/configmaps/pecule-api-config.yaml
 helm upgrade --install pecule-api helm/private-charts/pecule-api -f helm/values-global.yaml
+
+
+
+# sonarqube
+helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
+helm repo update
+helm upgrade --install sonarqube helm/charts/sonarqube-overlay \
+  --namespace sonarqube --create-namespace \
+  -f helm/values-global.yaml
 
 
 

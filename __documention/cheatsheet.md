@@ -14,7 +14,6 @@ kubectl run mysql-client --rm -it --image=mysql:5.7 --restart=Never -- bash
 kubectl run -it --rm debug --image=alpine -- sh
 apk add curl
 
-
 kubectl port-forward svc/mysql-exporter-prometheus-mysql-exporter 9104 -n monitoring
 kubectl port-forward -n monitoring service/mysql-exporter-prometheus-mysql-exporter 9104:9104
 kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 9090:9090
@@ -22,7 +21,6 @@ kubectl port-forward -n monitoring svc/prometheus-kube-prometheus-prometheus 909
 
 
 helm pull prometheus-community/prometheus-mysql-exporter --untar
-
 
 
 

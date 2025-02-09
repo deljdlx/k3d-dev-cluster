@@ -1,0 +1,13 @@
+ingress:
+  enabled: true
+  subdomain: sonarqube
+
+sonarqube:
+  service:
+    type: NodePort
+  persistence:
+    enabled: true
+    size: 2Gi
+  monitoringPasscode: changeit
+  community:
+    enabled: true

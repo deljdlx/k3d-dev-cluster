@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: adminer
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
+    {{ $key }}: "{{ $value }}"
+    {{- end }}
+spec:
+  tls:
+  - hosts:
+      - {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
+  rules:
+  - host: {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ .Release.Namespace }}-sonarqube
+            port:
+              number: 9000
+{{- end }}
