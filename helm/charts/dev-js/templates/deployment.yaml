@@ -1,23 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-js
+  name: {{ .Values.name }}
   labels:
-    app: dev-js
+    app: {{ .Values.name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: dev-js
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: dev-js
+        app: {{ .Values.name }}
     spec:
       containers:
-        - name: dev-js
+        - name: {{ .Values.name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+          {{ if .Values.enableWelcomePage }}
+          command: ["bash", "-c"]
+          args:
+            - "cd /workspace && node server.js"
+          {{ end }}
 
           volumeMounts:
             - name: workspace-volume

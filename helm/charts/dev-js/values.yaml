@@ -1,8 +1,15 @@
+name: dev-js
+enableWelcomePage: true
 message: "Développement JavaScript"
+
 ingress:
   enabled: true
-  # host: dev-js.k8s.home3.jlb.ninja
   subdomain: dev-js
+
+volume:
+  enabled: true
+  hostPath: /mnt/volumes/src/dev-js
+  mountPath: /workspace
 
 replicaCount: 1
 image:
@@ -12,11 +19,6 @@ image:
 
 container:
   user: 1000
-
-volume:
-  enabled: true
-  hostPath: /mnt/volumes/src/dev-js
-  mountPath: /workspace
 
 resources:
   limits:

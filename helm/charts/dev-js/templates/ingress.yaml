@@ -2,7 +2,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dev-js
+  name: {{ .Values.name }}
   namespace: {{ .Release.Namespace }}
   annotations:
     {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
@@ -20,7 +20,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ .Release.Namespace }}-dev-js
+            name: {{ .Release.Namespace }}-{{ .Values.name }}
             port:
               number: 3000
 {{- end }}
