@@ -1,0 +1,6 @@
+dependencies:
+- name: dev-php
+  repository: file://../dev-php
+  version: 0.1.0
+digest: sha256:a556b062147a52becc23220be5efec37ced723711f4abf1908286d219eb73c65
+generated: "2025-02-09T10:02:44.000923054+01:00"

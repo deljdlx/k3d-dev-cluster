@@ -1,3 +1,11 @@
-ingress:
-  enabled: true
-  subdomain: informations
+dev-php:
+  ingress:
+    enabled: true
+    subdomain: informations
+
+  name: informations
+
+  volumes:
+    sources:
+      mountPath: /var/www/html
+      hostPath: /mnt/volumes/src/informations
