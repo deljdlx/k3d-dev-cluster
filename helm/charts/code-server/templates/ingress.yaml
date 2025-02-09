@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: code-server
-  namespace: default
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
     {{ $key }}: "{{ $value }}"
@@ -21,6 +21,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: code-server
+            name: {{ .Release.Namespace }}-code-server
             port:
               number: 80

@@ -6,12 +6,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-php
+      app: php-blue-green
       version: green
   template:
     metadata:
       labels:
-        app: dev-php
+        app: php-blue-green
         version: green
     spec:
       containers:
@@ -52,12 +52,12 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-php
+      app: php-blue-green
       version: blue
   template:
     metadata:
       labels:
-        app: dev-php
+        app: php-blue-green
         version: blue
     spec:
       containers:

@@ -1,0 +1,15 @@
+dependencies:
+- name: http-time
+  repository: file://../http-time
+  version: 0.1.0
+- name: adminer
+  repository: file://../adminer
+  version: 0.2.1
+- name: code-server
+  repository: file://../code-server
+  version: 0.1.0
+- name: portainer
+  repository: file://../portainer
+  version: 1.0.59
+digest: sha256:4e7d0b17916079cb2bf6cab804ff16e787654f1cf8d98a84b3a7e3d064edd693
+generated: "2025-02-09T08:40:39.079866221+01:00"

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: dev-php
+  name: php-blue-green
 spec:
   selector:
-    app: dev-php
+    app: php-blue-green
     version: green
   ports:
     - port: 80

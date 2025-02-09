@@ -3,9 +3,6 @@
 # change permission acme.json (letsencrypt certificates)
 # sudo chmod 600 volumes/traefik-certificates/acme.json 
 
-
-
-
 spinner() {
     pid=$1
     message=$2
@@ -76,20 +73,44 @@ kubectl apply -f k8s/manifests/configmaps/traefik-config.yaml \
 && kubectl apply -f k8s/manifests/apps/traefik-dashboard/ingress.yaml
 
 
-echo "🔧 import image faker-mysql-php"
-k3d image import faker-mysql-php --cluster dev-cluster
+IMAGES=("faker-mysql-php" "dev-php:latest" "dev-js:latest" "code-server:latest" "pecule-api:latest")
+CLUSTER="dev-cluster"
 
-echo "🔧 import image dev-php"
-k3d image import dev-php:latest -c dev-cluster
+for IMAGE in "${IMAGES[@]}"; do
+    if ! k3d image list --cluster "$CLUSTER" | grep -q "$IMAGE"; then
+        echo "🔧 Importing image $IMAGE"
 
-echo "🔧 import image dev-js"
-k3d image import dev-js:latest --cluster dev-cluster
+        # Lancer l'import en arrière-plan
+        (k3d image import "$IMAGE" --cluster "$CLUSTER") &
 
-echo "🔧 import image code-server"
-k3d image import code-server:latest --cluster dev-cluster
+        # Récupérer le PID du processus en arrière-plan
+        pid=$!
 
-echo "🔧 import image pecule-api"
-k3d image import pecule-api:latest --cluster dev-cluster
+        # Lancer le spinner
+        spinner "$pid" "Importing $IMAGE into K3d"
+    else
+        echo "👌 Image $IMAGE is already imported"
+    fi
+done
+
+
+
+
+
+
+
+echo "🔧 Install tools charts"
+helm dependency update helm/charts/_tools \
+&& helm upgrade --install tools helm/charts/_tools -f helm/values-global.yaml \
+--namespace tools --create-namespace
+
+
+# this chart has a static namespace, and it's not possible to change it
+# so we need to install it separately
+# TODO build own chart to fix this
+echo "🔧 Install kubernetes dashboard chart"
+helm dependency update helm/charts/kubernetes-dashboard \
+&& helm upgrade --install tools helm/charts/kubernetes-dashboard -f helm/values-global.yaml
 
 
 

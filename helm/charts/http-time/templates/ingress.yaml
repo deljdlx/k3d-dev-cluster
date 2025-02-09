@@ -3,7 +3,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: time-http-server
-  namespace: default
+  namespace: {{ .Release.Namespace }}
   annotations:
     {{- range $key, $value := .Values.global.ingress.annotationsLetsEncrypt }}
     {{ $key }}: "{{ $value }}"
@@ -20,7 +20,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: time-http-server
+            name: {{ .Release.Namespace }}-time-http-server
             port:
               number: 8080
 {{- else }}

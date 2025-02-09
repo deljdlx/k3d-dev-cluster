@@ -1,4 +1,4 @@
 ingress:
   enabled: true
-  subdomain: dev-php
+  subdomain: php-blue-green
   # host: adminer.k8s.home3.jlb.ninja
