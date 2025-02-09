@@ -1,6 +1,0 @@
-projectKey=mon_projet_php
-serverUrl=http://sonarqube.k8s.home3.jlb.ninja
-serverVersion=25.1.0.102122
-dashboardUrl=http://sonarqube.k8s.home3.jlb.ninja/dashboard?id=mon_projet_php
-ceTaskId=29105177-398e-4645-b2b3-16473e247a14
-ceTaskUrl=http://sonarqube.k8s.home3.jlb.ninja/api/ce/task?id=29105177-398e-4645-b2b3-16473e247a14
