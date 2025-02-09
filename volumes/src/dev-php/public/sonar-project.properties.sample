@@ -1,0 +1,31 @@
+# Nom unique du projet dans SonarQube
+sonar.projectKey=mon_projet_php
+sonar.projectName=Mon Projet PHP
+sonar.projectVersion=1.0
+
+# URL de SonarQube (à adapter si nécessaire)
+sonar.host.url=http://SOMEWHERE.com
+
+# Authentification (utiliser un token au lieu d'un login/mot de passe)
+sonar.login=CHANGE_ME
+sonar.password=CHANGE_ME
+
+# Définition du langage
+sonar.language=php
+
+# Fichiers source et exclusions
+sonar.sources=src
+sonar.exclusions=vendor/**, tests/**, node_modules/**
+
+
+# Rapport de couverture de tests PHPUnit
+sonar.php.coverage.reportPaths=coverage.xml
+
+# Rapport des tests PHPUnit
+sonar.php.tests.reportPath=phpunit-report.xml
+
+# Désactiver le SCM si SonarQube ne trouve pas Git
+sonar.scm.disabled=true
+
+# Niveau de logs (utile en cas de debug)
+sonar.verbose=true
