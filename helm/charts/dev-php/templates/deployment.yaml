@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dev-php
+  name: {{ .Values.name }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: dev-php
+      app: {{ .Values.name }}
   template:
     metadata:
       labels:
-        app: dev-php
+        app: {{ .Values.name }}
     spec:
       containers:
-        - name: dev-php
+        - name: {{ .Values.name }}
           image: dev-php:latest
           imagePullPolicy: Never
           ports:
@@ -32,11 +32,11 @@ spec:
 
 
           volumeMounts:
-            - mountPath: "/var/www/html"
-              name: php-sources
+            - mountPath: {{ .Values.volumes.sources.mountPath }}
+              name: sources
       volumes:
-        - name: php-sources
+        - name: sources
           hostPath:
-            path: /mnt/volumes/src/dev-php
+            path: {{ .Values.volumes.sources.hostPath }}
             type: DirectoryOrCreate
 

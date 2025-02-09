@@ -1,3 +1,11 @@
 ingress:
   enabled: true
   subdomain: dev-php
+
+name: dev-php
+
+volumes:
+  sources:
+    mountPath: /var/www/html
+    hostPath: /mnt/volumes/src/dev-php
+
