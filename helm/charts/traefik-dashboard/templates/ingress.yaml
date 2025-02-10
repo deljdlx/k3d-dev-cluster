@@ -9,11 +9,11 @@ metadata:
 spec:
   tls:
   - hosts:
-      - k8s.home3.jlb.ninja
+      - {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
     # default behavior is to use the secret ; but we store cert in a volume
     # secretName: letsencrypt-cert
   rules:
-  - host: k8s.home3.jlb.ninja
+  - host: {{ .Values.ingress.host | default (printf "%s.%s" .Values.ingress.subdomain .Values.global.domain) }}
     http:
       paths:
       - path: /

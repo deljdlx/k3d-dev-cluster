@@ -1,0 +1,3 @@
+acme:
+  email: "CHANGE-ME@mail.com"
+  volume: "/traefik-certificates"

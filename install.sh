@@ -60,18 +60,27 @@ helm repo add portainer https://portainer.github.io/k8s
 helm repo update
 
 
-
 kubectl apply -f k8s/manifests/secrets/mariadb.yaml
 kubectl apply -f k8s/manifests/configmaps/php-config.yaml
 
-kubectl apply -f k8s/manifests/configmaps/traefik-config.yaml \
-&& kubectl apply -f k8s/manifests/base/traefik/role.yaml \
-&& kubectl apply -f k8s/manifests/base/traefik/account.yaml \
-&& kubectl apply -f k8s/manifests/base/traefik/role-binding.yaml \
-&& kubectl apply -f k8s/manifests/base/traefik/deployment.yaml \
-&& kubectl apply -f k8s/manifests/base/traefik/service.yaml\
-&& kubectl apply -f k8s/manifests/apps/traefik-dashboard/service.yaml\
-&& kubectl apply -f k8s/manifests/apps/traefik-dashboard/ingress.yaml
+
+helm upgrade traefik --install helm/charts/traefik \
+--set "acme.email=deljdlx@gmail.com" \
+--set "acme.volume=/mnt/volumes/traefik-certificates"
+
+helm upgrade traefik-dashboard --install helm/charts/traefik-dashboard \
+-f helm/values-global.yaml
+
+
+# exit 0
+# kubectl apply -f k8s/manifests/configmaps/traefik-config.yaml \
+# && kubectl apply -f k8s/manifests/base/traefik/role.yaml \
+# && kubectl apply -f k8s/manifests/base/traefik/account.yaml \
+# && kubectl apply -f k8s/manifests/base/traefik/role-binding.yaml \
+# && kubectl apply -f k8s/manifests/base/traefik/deployment.yaml \
+# && kubectl apply -f k8s/manifests/base/traefik/service.yaml\
+# && kubectl apply -f k8s/manifests/apps/traefik-dashboard/service.yaml\
+# && kubectl apply -f k8s/manifests/apps/traefik-dashboard/ingress.yaml
 
 
 IMAGES=(

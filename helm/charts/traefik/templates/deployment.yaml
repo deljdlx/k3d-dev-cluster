@@ -19,12 +19,6 @@ spec:
       containers:
         - name: traefik
           image: traefik:v3.3
-          env:
-            - name: ACME_EMAIL
-              valueFrom:
-                configMapKeyRef:
-                  name: traefik-config
-                  key: ACME_EMAIL
           args:
             - --api.insecure
             - --providers.kubernetesingress
@@ -36,7 +30,7 @@ spec:
             - --accesslog=true
 
 
-            - --certificatesresolvers.le.acme.email=${ACME_EMAIL}
+            - --certificatesresolvers.le.acme.email={{ .Values.acme.email }}
             - --certificatesresolvers.le.acme.storage=/letsencrypt/acme.json
             - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
             - --entrypoints.websecure.address=:443
@@ -66,5 +60,5 @@ spec:
       volumes:
         - name: traefik-certificates
           hostPath:
-            path: /mnt/volumes/traefik-certificates
+            path: {{ .Values.acme.volume }}
             type: DirectoryOrCreate
