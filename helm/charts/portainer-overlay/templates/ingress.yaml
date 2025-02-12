@@ -21,7 +21,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: {{ include "portainer.fullname" . }}
+            name: {{ .Release.Namespace }}-portainer
             port:
               number: 9000
 

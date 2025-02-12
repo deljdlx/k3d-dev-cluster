@@ -8,8 +8,8 @@ dependencies:
 - name: code-server
   repository: file://../code-server
   version: 0.1.0
-- name: portainer
-  repository: file://../portainer
-  version: 1.0.59
-digest: sha256:4e7d0b17916079cb2bf6cab804ff16e787654f1cf8d98a84b3a7e3d064edd693
-generated: "2025-02-09T08:40:39.079866221+01:00"
+- name: portainer-overlay
+  repository: file://../portainer-overlay
+  version: 0.1.0
+digest: sha256:5be5a6a2defe59cdd6518464e009bcbe4934ae966ce3f09130a24e1a3182de83
+generated: "2025-02-12T10:27:51.685079953+01:00"

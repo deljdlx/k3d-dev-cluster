@@ -140,6 +140,16 @@ helm install promtail grafana/promtail -n monitoring
 # ========================================================
 
 
+# sonarqube
+helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
+helm repo update
+helm upgrade --install sonarqube helm/charts/sonarqube-overlay \
+  --namespace sonarqube --create-namespace \
+  -f helm/values-global.yaml
+
+# ========================================================
+
+
 # todo helmify this
 echo "🔧 Install MariaDB"
 kubectl apply -f k8s/manifests/apps/mariadb/pv.yaml \
@@ -188,16 +198,6 @@ cat volumes/src/informations/code-server-config.txt
 
 # todo move this to a separate script
 helm upgrade --install pecule-api helm/private-charts/pecule-api -f helm/values-global.yaml
-
-
-
-# sonarqube
-helm repo add sonarqube https://SonarSource.github.io/helm-chart-sonarqube
-helm repo update
-helm upgrade --install sonarqube helm/charts/sonarqube-overlay \
-  --namespace sonarqube --create-namespace \
-  -f helm/values-global.yaml
-
 
 
 # kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.13.7/config/manifests/metallb-native.yaml
