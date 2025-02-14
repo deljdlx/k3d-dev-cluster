@@ -1,4 +1,5 @@
 .vscode
+**.tgz
 
 docker-private
 volumes/traefik-certificates/acme.json
