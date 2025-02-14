@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: mariadb
-          image: bitnami/mariadb:latest  # ✅ Utilisation de l'image Bitnami
+          image: bitnami/mariadb:latest
           ports:
             - containerPort: 3306
           env:

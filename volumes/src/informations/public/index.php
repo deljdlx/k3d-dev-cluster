@@ -48,6 +48,8 @@
             <textarea readonly onFocus="this.select()"><?php
                 echo file_get_contents(__DIR__ . '/../kubernetes-dashboard-token.txt');
             ?></textarea>
+            <p>Or execute this command in your terminal:</p>
+            <code><pre>kubectl -n kubernetes-dashboard create token admin-user</pre></code>
         </section>
 
 

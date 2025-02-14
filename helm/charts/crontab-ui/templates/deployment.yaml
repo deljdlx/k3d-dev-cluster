@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: crontab-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: crontab-ui
+  template:
+    metadata:
+      labels:
+        app: crontab-ui
+    spec:
+      containers:
+        - name: crontab-ui
+          image: alseambusher/crontab-ui
+          command: ["/bin/sh", "-c"]
+          args:
+            - "npm install -g crontab-ui && crontab-ui"
+          ports:
+            - containerPort: 8000
+          volumeMounts:
+            - name: crontab-data
+              mountPath: /crontab-ui
+      volumes:
+        - name: crontab-data
+          emptyDir: {}  # Utiliser un volume persistant si nécessaire
+---
+

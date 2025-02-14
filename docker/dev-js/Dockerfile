@@ -25,6 +25,7 @@ RUN apt-get update \
     && apt-get update && apt-get install -y sqlite3 libsqlite3-dev\
     && apt-get update && apt-get install -y telnet\
     && apt-get install -y default-mysql-client \
+    && apt-get install -y bat \
     # =========================================
     && pecl install xdebug memcached \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \

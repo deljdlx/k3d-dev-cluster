@@ -1,5 +1,5 @@
 apiVersion: v2
-name: _tools
+name: cron
 description: A Helm chart for Kubernetes
 
 # A chart can be either an 'application' or a 'library' chart.
@@ -22,27 +22,3 @@ version: 0.1.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 # It is recommended to use it with quotes.
 appVersion: "1.16.0"
-
-dependencies:
-
-  - name: http-time
-    version: "*"
-    repository: "file://../http-time"
-
-  - name: adminer
-    version: "*"
-    repository: "file://../adminer"
-
-  - name: code-server
-    version: "*"
-    repository: "file://../code-server"
-
-  - name: portainer-overlay
-    version: "*"
-    repository: "file://../portainer-overlay"
-
-  # JDLX_TODO crons seems to be broken
-  # - name: crontab-ui
-  #   version: "*"
-  #   repository: "file://../crontab-ui"
-

@@ -22,21 +22,22 @@ spinner() {
 echo "🔧 Building images..."
 
 IMAGES="
-adminer:docker/adminer/Dockerfile
-code-server:docker/code-server/Dockerfile
-dev-js:docker/dev-js/Dockerfile
-dev-php:docker/dev-php/Dockerfile
-faker-mysql-php:docker/faker-mysql-php/Dockerfile
-pecule-api:docker-private/pecule-api/Dockerfile
+cron:docker/cron
+adminer:docker/adminer
+code-server:docker/code-server
+dev-js:docker/dev-js
+dev-php:docker/dev-php
+faker-mysql-php:docker/faker-mysql-php
+pecule-api:docker-private/pecule-api
 "
 
 for entry in $IMAGES; do
     IMAGE=$(echo "$entry" | cut -d':' -f1)
-    DOCKERFILE=$(echo "$entry" | cut -d':' -f2)
+    DOCKERPATH=$(echo "$entry" | cut -d':' -f2)
 
     if [ -z "$(docker images -q "$IMAGE:latest")" ]; then
         echo "⚙️  Building $IMAGE..."
-        docker build -t "$IMAGE:latest" -f "$DOCKERFILE" .
+        docker build -t "$IMAGE:latest" -f "$DOCKERPATH"/Dockerfile $DOCKERPATH
     else
         echo "👌 $IMAGE already exists, skipping build."
     fi
@@ -84,6 +85,7 @@ helm upgrade traefik-dashboard --install helm/charts/traefik-dashboard \
 
 
 IMAGES=(
+    "cron:latest"
     "faker-mysql-php"
     "dev-php:latest"
     "dev-js:latest"
@@ -108,6 +110,9 @@ helm dependency update helm/charts/_tools \
 && helm upgrade --install tools helm/charts/_tools -f helm/values-global.yaml \
 --namespace tools --create-namespace
 
+
+helm upgrade --install cron helm/charts/cron -f helm/values-global.yaml \
+--namespace tools --create-namespace
 
 # this chart has a static namespace, and it's not possible to change it
 # so we need to install it separately

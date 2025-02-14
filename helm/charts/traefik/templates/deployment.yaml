@@ -22,9 +22,9 @@ spec:
           args:
             - --api.insecure
             - --providers.kubernetesingress
-            - --entrypoints.web.address=:80
+            - --providers.kubernetescrd
 
-            - --log.level=INFO
+            - --log.level={{ .Values.log_level }}
             - --log.format=json
             - --accesslog.format=json
             - --accesslog=true
@@ -35,13 +35,11 @@ spec:
             - --certificatesresolvers.le.acme.httpchallenge.entrypoint=web
             - --entrypoints.websecure.address=:443
 
+
+            - --entrypoints.web.address=:80
             - --entrypoints.web.http.redirections.entryPoint.to=websecure
             - --entrypoints.web.http.redirections.entryPoint.scheme=https
             - --entrypoints.websecure.http.tls.certresolver=le
-
-            - --providers.kubernetescrd
-
-
             - --entrypoints.node-dev.address=:3000
 
             # work but not safe ; kep for reference

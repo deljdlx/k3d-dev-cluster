@@ -22,10 +22,10 @@ RUN docker-php-ext-install pdo pdo_mysql
 WORKDIR /app
 
 # Copier le script PHP de génération de données
-COPY docker/faker-mysql-php/populate_db.php /app/
+COPY populate_db.php /app/
 
 # Copier le fichier composer.json et installer Faker
-COPY docker/faker-mysql-php/composer.json /app/
+COPY composer.json /app/
 RUN /usr/local/bin/composer install --no-interaction --no-progress --no-scripts
 
 
